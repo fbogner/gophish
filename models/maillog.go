@@ -220,7 +220,7 @@ func (m *MailLog) Generate(msg *gomail.Message) error {
 	}
 	// Attach the files
 	for _, a := range c.Template.Attachments {
-		msg.Attach(func(a Attachment) (string, gomail.FileSetting, gomail.FileSetting) {
+		msg.Embed(func(a Attachment) (string, gomail.FileSetting, gomail.FileSetting) {
 			h := map[string][]string{"Content-ID": {fmt.Sprintf("<%s>", a.Name)}}
 			return a.Name, gomail.SetCopyFunc(func(w io.Writer) error {
 				decoder := base64.NewDecoder(base64.StdEncoding, strings.NewReader(a.Content))
